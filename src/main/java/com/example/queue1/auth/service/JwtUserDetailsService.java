@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
-
     private final WorkerRepository workerRepository;
 
     @Override

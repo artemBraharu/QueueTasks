@@ -21,7 +21,6 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequiredArgsConstructor
 public class AuthenticationController {
-
     private final AuthenticationManager authenticationManager;
     private final JwtUserDetailsService jwtUserDetailsService;
     private final JwtTokenService jwtTokenService;
@@ -51,6 +50,5 @@ public class AuthenticationController {
         if (task != null) {
             webSocketService.sendToUser(username, task);
         }
-
     }
 }

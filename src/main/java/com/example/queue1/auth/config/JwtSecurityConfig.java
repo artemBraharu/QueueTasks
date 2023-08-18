@@ -18,27 +18,23 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @RequiredArgsConstructor
 public class JwtSecurityConfig {
-
     private final JwtRequestFilter jwtRequestFilter;
-
     @SuppressWarnings("deprecation")
     @Bean
     public static NoOpPasswordEncoder passwordEncoder() {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/", "/authenticate", "/register", "/employer/**", "/ws").permitAll()
+                        .requestMatchers( "/authenticate", "/register", "/employer/**", "/ws").permitAll()
                         .anyRequest().hasAuthority("USER")
                 )
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

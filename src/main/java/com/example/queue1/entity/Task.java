@@ -14,7 +14,6 @@ import lombok.Setter;
 @Entity
 public class Task {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

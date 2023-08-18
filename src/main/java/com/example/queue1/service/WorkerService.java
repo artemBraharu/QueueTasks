@@ -16,8 +16,4 @@ public class WorkerService {
     public Worker saveWorker(Worker worker) {
         return workerRepository.save(worker);
     }
-
-    public Optional<Worker> findByUsername(String username) {
-        return workerRepository.findByUsername(username);
-    }
 }

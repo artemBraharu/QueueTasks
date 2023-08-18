@@ -4,6 +4,7 @@ import com.example.queue1.entity.Status;
 import com.example.queue1.entity.Task;
 import com.example.queue1.entity.Worker;
 import com.example.queue1.repo.WorkerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,15 +14,13 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Service
+@RequiredArgsConstructor
 public class TaskQueueService {
 
     private static long id = 0;
     private final WorkerRepository workerRepository;
     private final Queue<Task> taskQueue = new ConcurrentLinkedQueue<>();
 
-    public TaskQueueService(WorkerRepository workerRepository) {
-        this.workerRepository = workerRepository;
-    }
 
     public Task addTask(Task task) {
         task.setId(id++);

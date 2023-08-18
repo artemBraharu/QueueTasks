@@ -4,6 +4,7 @@ import com.example.queue1.entity.Task;
 import com.example.queue1.entity.Worker;
 import com.example.queue1.repo.WorkerRepository;
 import com.example.queue1.service.TaskQueueService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +13,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/worker")
+@RequiredArgsConstructor
 public class WorkerController {
     private final TaskQueueService taskQueueService;
     private final WorkerRepository workerRepository;
-
-
-    public WorkerController(TaskQueueService taskQueueService, WorkerRepository workerRepository) {
-        this.taskQueueService = taskQueueService;
-        this.workerRepository = workerRepository;
-    }
 
     @GetMapping("/getNextTask")
     public Task getNextTask(@RequestParam String worker) {
