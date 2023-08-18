@@ -23,7 +23,8 @@ as completed, and view their list of active tasks.
 2. Go to the worker's web page (`/worker`) to retrieve, complete, and view tasks.
 
 ## Endpoits
-
+- ` For websocket connection ` : ws//localhost:8080/ws
+- `Subcscription URL for WS`: /queue/tasks/{username}
 - `POST /register` : For registration the worker
 - `POST /authenticate` : For login the worker
 - `POST /employer/addTask`: Add a task to the queue.
