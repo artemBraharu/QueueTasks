@@ -2,11 +2,14 @@
 
 # Task Queue Service
 
-Task Queue Service is an application that allows employers to add tasks to a queue and workers to retrieve and complete those tasks.
+Task Queue Service is an application that allows employers to add tasks to a queue and workers to retrieve and complete
+those tasks.
 
 ## Description
 
-This application provides two roles: employer and worker. An employer can add tasks to the queue and view it. When adding a task, the employer can optionally assign it to a worker. A worker can retrieve tasks from the queue, mark them as completed, and view their list of active tasks.
+This application provides two roles: employer and worker. An employer can add tasks to the queue and view it. When
+adding a task, the employer can optionally assign it to a worker. A worker can retrieve tasks from the queue, mark them
+as completed, and view their list of active tasks.
 
 ## Installation and Launch
 
@@ -19,7 +22,8 @@ This application provides two roles: employer and worker. An employer can add ta
 1. Go to the employer's web page (`/employer`) to add tasks to the queue and view the queue.
 2. Go to the worker's web page (`/worker`) to retrieve, complete, and view tasks.
 
-## Endpoits 
+## Endpoits
+
 - `POST /register` : For registration the worker
 - `POST /authenticate` : For login the worker
 - `POST /employer/addTask`: Add a task to the queue.

@@ -9,8 +9,6 @@ import com.example.queue1.service.TaskQueueService;
 import com.example.queue1.service.WebSocketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,8 +29,6 @@ public class AuthenticationController {
     private final WebSocketService webSocketService;
 
     @PostMapping("/authenticate")
-    @MessageMapping("/authenticate")
-    @SendTo("/topic/public")
     public AuthenticationResponse authenticate(@RequestBody final AuthenticationRequest authenticationRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

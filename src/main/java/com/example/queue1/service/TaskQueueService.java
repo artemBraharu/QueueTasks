@@ -4,9 +4,6 @@ import com.example.queue1.entity.Status;
 import com.example.queue1.entity.Task;
 import com.example.queue1.entity.Worker;
 import com.example.queue1.repo.WorkerRepository;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,8 +34,7 @@ public class TaskQueueService {
             if (worker.equals(task.getAssignedWorker())) {
                 task.setStatus(Status.IN_PROGRESS);
                 return task;
-            }
-            else if (task.getAssignedWorker() == null) {
+            } else if (task.getAssignedWorker() == null) {
                 task.assignWorker(worker);
                 task.setStatus(Status.IN_PROGRESS);
                 return task;
@@ -57,7 +53,7 @@ public class TaskQueueService {
         for (Task task : taskQueue) {
             if (task.getAssignedWorker() != null &&
                     task.getAssignedWorker().equals(worker) &&
-                    task.getStatus()==Status.IN_PROGRESS &&
+                    task.getStatus() == Status.IN_PROGRESS &&
                     task.getId() == taskId) {
                 Optional<Worker> byUsername = workerRepository.findByUsername(worker);
                 byUsername.ifPresent(worker1 -> worker1.getAssignedTasks().remove(task));

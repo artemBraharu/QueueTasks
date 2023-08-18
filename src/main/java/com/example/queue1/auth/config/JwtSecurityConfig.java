@@ -41,7 +41,7 @@ public class JwtSecurityConfig {
                         .requestMatchers("/", "/authenticate", "/register", "/employer/**", "/ws").permitAll()
                         .anyRequest().hasAuthority("USER")
                 )
-                        .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

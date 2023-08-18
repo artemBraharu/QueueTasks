@@ -12,6 +12,7 @@ import java.util.Optional;
 public class WorkerService {
 
     private final WorkerRepository workerRepository;
+
     public Worker saveWorker(Worker worker) {
         return workerRepository.save(worker);
     }
