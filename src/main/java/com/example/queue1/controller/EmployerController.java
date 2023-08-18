@@ -1,5 +1,6 @@
 package com.example.queue1.controller;
 
+import com.example.queue1.entity.Status;
 import com.example.queue1.entity.Task;
 import com.example.queue1.service.TaskQueueService;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,10 @@ public class EmployerController {
     private final TaskQueueService taskQueueService;
 
     @PostMapping("/addTask")
-    public void addTask(@RequestBody Task task) {
-        task.setStatus("Pending");
-        taskQueueService.addTask(task);
+    @ResponseBody
+    public Task addTask(@RequestBody Task task) {
+        task.setStatus(Status.PENDING);
+        return taskQueueService.addTask(task);
     }
 
     @GetMapping("/viewTasks")

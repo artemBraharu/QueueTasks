@@ -1,12 +1,17 @@
 package com.example.queue1.service;
 
+import com.example.queue1.entity.Status;
 import com.example.queue1.entity.Task;
 import com.example.queue1.entity.Worker;
 import com.example.queue1.repo.WorkerRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -21,31 +26,27 @@ public class TaskQueueService {
         this.workerRepository = workerRepository;
     }
 
-    public void addTask(Task task) {
+    public Task addTask(Task task) {
         task.setId(id++);
         taskQueue.add(task);
+        return task;
     }
 
     public Task getNextTaskForWorker(String worker) {
-
         for (Task task : taskQueue) {
             if (worker.equals(task.getAssignedWorker())) {
-                task.setStatus("In Progress");
+                task.setStatus(Status.IN_PROGRESS);
                 return task;
             }
-        }
-
-
-        for (Task task : taskQueue) {
-            if (task.getAssignedWorker() == null) {
+            else if (task.getAssignedWorker() == null) {
                 task.assignWorker(worker);
-                task.setStatus("In Progress");
+                task.setStatus(Status.IN_PROGRESS);
                 return task;
             }
         }
-
         return null;
     }
+
 
     public List<Task> getAllTasks() {
         List<Task> allTasks = new ArrayList<>(taskQueue);
@@ -56,15 +57,14 @@ public class TaskQueueService {
         for (Task task : taskQueue) {
             if (task.getAssignedWorker() != null &&
                     task.getAssignedWorker().equals(worker) &&
-                    task.getStatus().equals("In Progress") &&
+                    task.getStatus()==Status.IN_PROGRESS &&
                     task.getId() == taskId) {
-                Worker byUsername = workerRepository.findByUsername(worker);
-                byUsername.getAssignedTasks().remove(task);
+                Optional<Worker> byUsername = workerRepository.findByUsername(worker);
+                byUsername.ifPresent(worker1 -> worker1.getAssignedTasks().remove(task));
                 taskQueue.remove(task);
                 return true;
             }
         }
-
         return false;
     }
 }

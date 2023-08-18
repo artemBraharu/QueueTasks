@@ -1,20 +1,26 @@
 package com.example.queue1.entity;
 
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@Entity
 public class Worker {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String username;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Task> assignedTasks;
-
-    public Worker(String username, String password) {
-        this.username = username;
-        this.password = password;
-        this.assignedTasks = new ArrayList<>();
-    }
 }
 

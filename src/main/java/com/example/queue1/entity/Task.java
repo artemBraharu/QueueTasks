@@ -1,14 +1,26 @@
 package com.example.queue1.entity;
 
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@Entity
 public class Task {
 
-    private long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String description;
     private String assignedWorker;
-    private String status;
+    private Status status;
 
     public void assignWorker(String worker) {
         this.assignedWorker = worker;

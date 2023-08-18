@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/worker")
@@ -23,32 +24,31 @@ public class WorkerController {
 
     @GetMapping("/getNextTask")
     public Task getNextTask(@RequestParam String worker) {
-        Worker byUsername = workerRepository.findByUsername(worker);
-        if (byUsername == null) {
+        Optional<Worker> byUsername = workerRepository.findByUsername(worker);
+        if (byUsername.isEmpty()) {
             return null;
         }
         Task nextTaskForWorker = taskQueueService.getNextTaskForWorker(worker);
-        byUsername.getAssignedTasks().add(nextTaskForWorker);
+        byUsername.get().getAssignedTasks().add(nextTaskForWorker);
         return nextTaskForWorker;
     }
 
     @GetMapping("/{worker}/active-tasks")
     public ResponseEntity<List<Task>> getActiveTasksForWorker(@PathVariable String worker) {
-        Worker byUsername = workerRepository.findByUsername(worker);
-        if (byUsername == null) {
+        Optional<Worker> byUsername = workerRepository.findByUsername(worker);
+        if (byUsername.isEmpty()) {
             return null;
         }
-        List<Task> assignedTasks = byUsername.getAssignedTasks();
+        List<Task> assignedTasks = byUsername.get().getAssignedTasks();
         return ResponseEntity.ok(assignedTasks);
     }
 
     @PostMapping("/complete")
     public ResponseEntity<String> completeTask(@RequestParam String worker, @RequestParam long taskId) {
-        Worker byUsername = workerRepository.findByUsername(worker);
-        if (byUsername == null) {
+        Optional<Worker> byUsername = workerRepository.findByUsername(worker);
+        if (byUsername.isEmpty()) {
             return null;
         }
-
         boolean success = taskQueueService.completeTask(worker, taskId);
         if (success) {
             return ResponseEntity.ok("Task marked as completed and removed from queue.");
@@ -56,13 +56,5 @@ public class WorkerController {
             return ResponseEntity.badRequest().body("Failed to complete task or task not found.");
         }
     }
-
-    @PostMapping("/login")
-    public void login(@RequestBody Worker worker) {
-        Task nextTaskForWorker = taskQueueService.getNextTaskForWorker(worker.getUsername());
-        worker.getAssignedTasks().add(nextTaskForWorker);
-        workerRepository.save(worker);
-    }
-
 }
 
