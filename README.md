@@ -21,16 +21,12 @@ This application provides two roles: employer and worker. An employer can add ta
 
 ## Endpoits 
 - `POST /register` : For registration the worker
-- `POST /authenticate` : For login the worker and employer
+- `POST /authenticate` : For login the worker
 - `POST /employer/addTask`: Add a task to the queue.
 - `GET /employer/queue`: Get a list of all tasks in the queue.
-- `GET /worker/getNextTask`: Get the next task for a worker.
+- `GET /worker/getNextTask`: Get the next task for a worker.(authentication required)
 - `GET /worker/{worker}/active-tasks`: Add a task to the queue (authentication required).
-- `POST /worker/complete/{taskId}`: Mark a task as completed and remove it from the queue (authentication required).
-
-## Authentication
-
-Authentication is required to access different parts of the application. Employers and workers can use their credentials to log in.
+- `POST /worker/complete`: Mark a task as completed and remove it from the queue (authentication required).
 
 ## Dependencies
 
